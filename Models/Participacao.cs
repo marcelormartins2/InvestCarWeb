@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InvestCarWeb.Models
 {
-    public partial class Participacao
+    public class Participacao
     {
         public string ParceiroId { get; set; }
         public int VeiculoId { get; set; }

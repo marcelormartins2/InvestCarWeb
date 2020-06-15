@@ -12,10 +12,10 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefone)
+                @Html.DisplayNameFor(model => model.Celular)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Endereço)
+                @Html.DisplayNameFor(model => model.Endereco)
             </th>
             <th></th>
         </tr>
@@ -28,14 +28,14 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
+                    @Html.DisplayFor(modelItem => item.Celular)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Endereço)
+                    @Html.DisplayFor(modelItem => item.Endereco)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                    @if (ViewBag.Role == "Administrator")
+                    <a asp-action="Details" asp-route-id="@item.Email">Detalhes</a>
+                    @if (User.IsInRole("Administrator"))
                     {
                         <a asp-action="Edit" asp-route-id="@item.Id">| Edit</a>
                         <a asp-action="Delete" asp-route-id="@item.Id">| Delete</a>

@@ -30,22 +30,22 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Telefone)
+            @Html.DisplayNameFor(model => model.Celular)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Telefone)
+            @Html.DisplayFor(model => model.Celular)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Endereço)
+            @Html.DisplayNameFor(model => model.Endereco)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Endereço)
+            @Html.DisplayFor(model => model.Endereco)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Lista">Back to List</a>
+        <a asp-action="Lista">Voltar para lista</a>
     </form>
 </div>

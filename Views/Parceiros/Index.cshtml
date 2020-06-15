@@ -24,7 +24,9 @@
                                     <div class="profile-avatar">
                                         <img src=@ViewBag.PathAvatar alt="Avatar" height="128" width="128">
                                         <p class="mt10">
-                                            <a asp-area="" asp-controller="Parceiros" asp-action="Avatar"><i class="fa fa-picture-o"></i> Editar</a>
+                                            <a asp-area="" asp-controller="Parceiros" 
+                                               asp-action="Avatar"><i class="fa fa-picture-o">
+                                            </i> Editar foto</a>
                                         </p>
                                     </div>
                                 </div>
@@ -46,8 +48,8 @@
                                                 <dl class="mt20">
                                                     <dt class="text-muted">Telefone</dt>
                                                     <dd>@Model.PhoneNumber</dd>
-                                                    <dt class="text-muted">Whatsapp</dt>
-                                                    <dd>@Model.Telefone</dd>
+                                                    <dt class="text-muted">Celular</dt>
+                                                    <dd>@Model.Celular</dd>
                                                 </dl>
                                             </div>
                                             <div class="col-md-8">

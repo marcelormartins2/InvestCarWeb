@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InvestCarWeb.Migrations
 {
-    public partial class InicialIdenty : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,8 +42,8 @@ namespace InvestCarWeb.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
-                    Endereço = table.Column<string>(nullable: true)
+                    Celular = table.Column<string>(nullable: true),
+                    Endereco = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

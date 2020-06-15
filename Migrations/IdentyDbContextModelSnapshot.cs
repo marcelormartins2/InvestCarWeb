@@ -84,6 +84,9 @@ namespace InvestCarWeb.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Celular")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -95,7 +98,7 @@ namespace InvestCarWeb.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Endereço")
+                    b.Property<string>("Endereco")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("LockoutEnabled")
@@ -125,9 +128,6 @@ namespace InvestCarWeb.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Telefone")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -349,12 +349,7 @@ namespace InvestCarWeb.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ParceiroId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("ParceiroId");
 
                     b.HasIndex("RoleId");
 
@@ -463,10 +458,6 @@ namespace InvestCarWeb.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("InvestCarWeb.Models.Parceiro", null)
-                        .WithMany("IdentityUserRole")
-                        .HasForeignKey("ParceiroId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")

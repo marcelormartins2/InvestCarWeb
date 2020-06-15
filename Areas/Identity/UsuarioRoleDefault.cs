@@ -17,10 +17,10 @@ namespace InvestCarWeb.Areas.Identity
             {
                 Nome = "Marcelo Rodrigues Martins",
                 UserName = "Marcelo",
-                Telefone = "61992562507",
+                Celular = "61992562507",
                 Email = "marcelormartins2@gmail.com",
                 PhoneNumber = "61992562507",
-                Endereço = "QS 16, Conjunto 1D, Casa 1, Riacho Fundo I-DF, CEP 71825-644",
+                Endereco = "QS 16, Conjunto 1D, Casa 1, Riacho Fundo I-DF, CEP 71825-644",
                 EmailConfirmed = true
             }; 
             const string password = "Admin@123"; // Todo: Inportante seguir as regras

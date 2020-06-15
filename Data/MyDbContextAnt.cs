@@ -3,7 +3,7 @@
 
 //namespace InvestCarWeb.Data
 //{
-//    public partial class IdentyDbContext : DbContext
+//    public class IdentyDbContext : DbContext
 //    {
 //        public IdentyDbContext()
 //        {

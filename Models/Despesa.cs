@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InvestCarWeb.Models
 {
-    public partial class Despesa
+    public class Despesa
     {
         public Despesa()
         {

@@ -104,6 +104,7 @@
 
                 var formdata = new FormData();
                 formdata.append("base64image", img);
+                formdata.append("userName", "@this.User.Identity.Name.ToString()")
                 $.ajax({ url: "@Url.Action("SaveImage","Parceiros")", async: false, type: "POST", data: formdata, processData: false, contentType: false });
                 $('#btnCancel').click();
 

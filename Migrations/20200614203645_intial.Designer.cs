@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestCarWeb.Migrations
 {
     [DbContext(typeof(IdentyDbContext))]
-    [Migration("20200606191938_InicialIdenty")]
-    partial class InicialIdenty
+    [Migration("20200614203645_intial")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,9 @@ namespace InvestCarWeb.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Celular")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -97,7 +100,7 @@ namespace InvestCarWeb.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Endereço")
+                    b.Property<string>("Endereco")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("LockoutEnabled")
@@ -127,9 +130,6 @@ namespace InvestCarWeb.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Telefone")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("TwoFactorEnabled")

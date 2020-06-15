@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using InvestCarWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace InvestCarWeb.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+    [Authorize(Roles = "Administrator")]
+    public class IndexModel : PageModel
     {
         private readonly UserManager<Parceiro> _userManager;
         private readonly SignInManager<Parceiro> _signInManager;
@@ -45,7 +47,7 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefone")]
             public string PhoneNumber { get; set; }
         }
 
