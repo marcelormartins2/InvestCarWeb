@@ -67,12 +67,19 @@ namespace InvestCarWeb
             app.UseEndpoints(endpoints =>
             {
                 //routes.MapRoute("modulos","Prontuario/{controller=Home}/{action=Index}/{id?}");
+
                 //routes.MapRoute("pacientes","{controller=Home}/{action=Index}/{id}/{paciente}");
+
+                //endpoints.MapAreaControllerRoute(
+                //    name: "logout",
+                //    areaName: "Identity",
+                //    pattern: "Identity/Account/Logout");
 
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+                
                 endpoints.MapRazorPages();
 
             });

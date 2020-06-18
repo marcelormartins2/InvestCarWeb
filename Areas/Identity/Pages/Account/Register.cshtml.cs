@@ -64,7 +64,7 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
         }
-
+        
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
@@ -102,8 +102,8 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
                     imageFile.Write(bytes, 0, bytes.Length);
                     imageFile.Flush();
 
-                    await _signInManager.SignOutAsync();
-                    return Redirect("~/Identity/Account/RegistroConfirmado");
+                    return Redirect(Url.Content(
+                        "Logout?returnUrl=/Identity/Account/RegistroConfirmado"));
                 }
                 foreach (var error in result.Errors)
                 {
