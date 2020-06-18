@@ -86,6 +86,12 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Parceiro logado.");
+                    var parceiro = await _context.Parceiro
+                        .FirstOrDefaultAsync(m => m.UserName == Input.UserName);
+                    if (parceiro.Nome == null)
+                    {
+                        return LocalRedirect(Url.Content("/Parceiros/Edit/"+parceiro.Id));
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -115,7 +121,7 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
                     {
                         ModelState.AddModelError(string.Empty, "Conta aguardando liberação.");
                     }
-                        return Page();
+                    return Page();
                 }
             }
 

@@ -58,7 +58,7 @@
                 </label>
                 <input id="file" type="file" accept="image/*" style="display:none" />
             </a>
-            <a asp-area="" asp-controller="Parceiros" asp-action="Index">
+            <a href="javascript:void(0);" onclick="history.go(-1);">
                 <i class="fa fa-close fa-4x" id="btnCancel" title="Cancelar">&nbsp</i>
             </a>
             <a>
@@ -106,7 +106,7 @@
                 formdata.append("base64image", img);
                 formdata.append("userName", "@this.User.Identity.Name.ToString()")
                 $.ajax({ url: "@Url.Action("SaveImage","Parceiros")", async: false, type: "POST", data: formdata, processData: false, contentType: false });
-                $('#btnCancel').click();
+                history.go(-1);
 
             })
 

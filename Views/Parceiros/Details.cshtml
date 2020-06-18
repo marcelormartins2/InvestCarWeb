@@ -57,14 +57,7 @@
 <div>
     @if (Model.UserName == User.Identity.Name || User.IsInRole("Administrator"))
     {
-        if (User.IsInRole("Administrator"))
-        {
-            <p><a asp-action="Edit" asp-route-id="@Model.Id">Editar dados</a></p>
-        }
-        else
-        {
-            <p><a asp-controller="Parceiros" asp-action="Index">Editar dados</a></p>
-        }
+        <p><a asp-action="Edit" asp-route-id="@Model.Id">Editar dados</a></p>
     }
     <a asp-action="Lista">Voltar para lista</a>
 </div>

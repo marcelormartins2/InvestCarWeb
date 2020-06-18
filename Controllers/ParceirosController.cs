@@ -77,7 +77,7 @@ namespace InvestCarWeb.Controllers
             return View(parceiro);
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(String id)
         {
             
@@ -92,12 +92,19 @@ namespace InvestCarWeb.Controllers
             {
                 return NotFound();
             }
-            return View(parceiro);
+
+            if (User.IsInRole("Administrator") || User.Identity.Name == parceiro.UserName)
+            {
+                return View(parceiro);
+            }
+
+            return Redirect(Url.Content("~/Identity/Account/AccessDenied"));
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(string id, Parceiro parceiro)
         {
             if (id != parceiro.Id)
