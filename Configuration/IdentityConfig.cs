@@ -49,7 +49,7 @@ namespace InvestCarWeb.Configuration
                 // SignIn Config
                 opt.SignIn.RequireConfirmedPhoneNumber = false;
                 opt.SignIn.RequireConfirmedAccount = false;
-                opt.SignIn.RequireConfirmedEmail = false;  // Pay Attention
+                opt.SignIn.RequireConfirmedEmail = true;  // Pay Attention
 
                 // Password Config          // Todo: Quer que a senha padrão seja Admin@123
                 opt.Password.RequireUppercase = true;

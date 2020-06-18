@@ -256,7 +256,14 @@ namespace InvestCarWeb.Controllers
             _context.Parceiro.Remove(parceiro);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Lista));
+            var path = Path.Combine(Directory.GetCurrentDirectory(),
+                       "wwwroot/img/avatars", parceiro.UserName + ".jpg");
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+                return RedirectToAction(nameof(Lista));
         }
         public IActionResult Avatar()
         {

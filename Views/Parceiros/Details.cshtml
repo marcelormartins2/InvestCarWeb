@@ -1,35 +1,53 @@
 ﻿@model InvestCarWeb.Models.Parceiro
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
+    var avatar = Model.UserName + ".jpg?" + DateTime.Now.Ticks;
 }
 
 <h2>Detalhes</h2>
 
 <div>
     <h4>Parceiro</h4>
-    <hr />
+    <p>
+        <img src="@avatar" alt="avatar">
+    </p>
     <dl class="dl-horizontal">
+        @if (Model.UserName == User.Identity.Name || User.IsInRole("Administrator"))
+        {
+                <dt>
+                    Nome de Usuário:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+        }
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            Parceiro:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            Email:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Celular)
+            Celular:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Celular)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Endereco)
+            Telefone:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            Endereço:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Endereco)

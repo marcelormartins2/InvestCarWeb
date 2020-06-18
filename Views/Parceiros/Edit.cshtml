@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Editar";
     bool[] Confirmado = new bool[2] { true, false };
-    var avatar = this.User.Identity.Name.ToString() + ".jpg?" + DateTime.Now.Ticks;
+    var avatar = Model.UserName + ".jpg?" + DateTime.Now.Ticks;
 }
 
 <h2>Editar</h2>

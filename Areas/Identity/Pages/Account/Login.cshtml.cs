@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using InvestCarWeb.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using InvestCarWeb.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace InvestCarWeb.Areas.Identity.Pages.Account
 {
@@ -18,11 +22,15 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Parceiro> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IdentyDbContext _context;
 
-        public LoginModel(SignInManager<Parceiro> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Parceiro> signInManager,
+            ILogger<LoginModel> logger,
+            IdentyDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -94,8 +102,20 @@ namespace InvestCarWeb.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Login inválido.");
-                    return Page();
+                    var parceiro = await _context.Parceiro
+                        .FirstOrDefaultAsync(m => m.UserName == Input.UserName);
+                    if (parceiro == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
+                    }else if (parceiro.EmailConfirmed)
+                    {
+                        ModelState.AddModelError(string.Empty, "Senha não confere.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Conta aguardando liberação.");
+                    }
+                        return Page();
                 }
             }
 

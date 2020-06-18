@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<InvestCarWeb.Models.Parceiro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Parceiros";
 }
 
 <h2>Parceiros</h2>
@@ -9,13 +9,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Avatar
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Celular)
+                Parceiro
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Endereco)
+                Telefone
+            </th>
+            <th>
+                Celular/Whatsapp
+            </th>
+            <th>
+                Email
             </th>
             <th></th>
         </tr>
@@ -23,25 +29,48 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
+            var avatar = item.UserName + ".jpg?" + DateTime.Now.Ticks;
+        <tr>
+            <td>
+                <div class="row profile">
+                    <div class="col-md-4">
+                        <div class="profile-avatar">
+                            <a asp-action="Details" asp-route-id="@item.Email">
+                                <img src="@avatar" alt="Avatar" height="32" width="32">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Email">
                     @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @if (item.Celular != null)
+                {
+                    var link = "https://wa.me/" + item.Celular;
+                <a href="@link" target="_blank">
                     @Html.DisplayFor(modelItem => item.Celular)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Endereco)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Email">Detalhes</a>
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id">| Edit</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">| Delete</a>
-                    }
-                </td>
-            </tr>
+                </a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Email">Detalhes</a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">| Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">| Delete</a>
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
