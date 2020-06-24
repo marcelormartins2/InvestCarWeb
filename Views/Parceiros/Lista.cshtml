@@ -35,17 +35,35 @@
                 <div class="row profile">
                     <div class="col-md-4">
                         <div class="profile-avatar">
-                            <a asp-action="Details" asp-route-id="@item.Email">
-                                <img src="@avatar" alt="Avatar" height="32" width="32">
-                            </a>
+                            @if (item.UserName == User.Identity.Name)
+                            {
+                                <a asp-action="Index">
+                                    <img src="@avatar" alt="Avatar" height="32" width="32">
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Details" asp-route-id="@item.Email">
+                                    <img src="@avatar" alt="Avatar" height="32" width="32">
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Email">
+                @if (item.UserName == User.Identity.Name)
+                {
+                <a asp-action="Index">
                     @Html.DisplayFor(modelItem => item.Nome)
                 </a>
+                }
+                else
+                {
+                    <a asp-action="Details" asp-route-id="@item.Email">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </a>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
@@ -63,7 +81,14 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Email">Detalhes</a>
+                @if (item.UserName == User.Identity.Name)
+                {
+                    <a asp-action="Index">Detalhes</a>
+                }
+                else
+                {
+                    <a asp-action="Details" asp-route-id="@item.Email">Detalhes</a>
+                }
                 @if (User.IsInRole("Administrator"))
                 {
                     <a asp-action="Edit" asp-route-id="@item.Id">| Edit</a>

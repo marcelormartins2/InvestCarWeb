@@ -25,6 +25,8 @@ namespace InvestCarWeb.Models
         public double? ValorVenda { get; set; }
         public int? DespesaId { get; set; }
         public int ModeloCarId { get; set; }
+        public int NumConsultas { get; set; }
+        public DateTime DtCadastro { get; set; }
 
         public Despesa Despesa { get; set; }
         public Modelocar ModeloCar { get; set; }

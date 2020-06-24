@@ -173,19 +173,10 @@ namespace InvestCarWeb.Controllers
                 {
                     parceiroAtual.EmailConfirmed = parceiro.EmailConfirmed;
                 }
-                if (parceiro.Nome != parceiroAtual.Nome)
-                {
-                    parceiroAtual.Nome = parceiro.Nome;
-                }
-                if (parceiro.Endereco != parceiroAtual.Endereco)
-                {
-                    parceiroAtual.Endereco = parceiro.Endereco;
-                }
-                if (parceiro.Celular != parceiroAtual.Celular)
-                {
-                    parceiroAtual.Celular = parceiro.Celular;
-                }
-
+                parceiroAtual.Nome = parceiro.Nome;
+                parceiroAtual.Endereco = parceiro.Endereco;
+                parceiroAtual.Celular = parceiro.Celular;
+                
                 try
                 {
                     _context.Update(parceiroAtual);
@@ -201,6 +192,10 @@ namespace InvestCarWeb.Controllers
                     {
                         throw;
                     }
+                }
+                if (parceiro.UserName == User.Identity.Name)
+                {
+                    return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(Lista));
             }
@@ -276,12 +271,7 @@ namespace InvestCarWeb.Controllers
         {
             return View();
         }
-        public Task<IActionResult> SaveImage(string base64image, string userName)
-        {
-            CriarAvatar(base64image, userName);
-            return null;
-        }
-
+        
         [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
@@ -307,13 +297,21 @@ namespace InvestCarWeb.Controllers
             return View(parceiro);
         }
 
+        public Task<IActionResult> SaveImage(string base64image, string userName)
+        {
+            if (User.IsInRole("Administrador") || User.Identity.Name == userName)
+            {
+                CriarAvatar(base64image, userName);
+            }
+            return null;
+        }
         private bool CriarAvatar(string base64image, string userName)
         {
             if (base64image != null)
             {
                 byte[] bytes = Convert.FromBase64String(base64image.Substring(23));
                 var path = Path.Combine(
-                                 Directory.GetCurrentDirectory(), "wwwroot/img/avatars", userName + ".jpg");
+                           Directory.GetCurrentDirectory(), "wwwroot/img/avatars", userName + ".jpg");
                 using (var imageFile = new FileStream(path, FileMode.Create))
                 {
                     imageFile.Write(bytes, 0, bytes.Length);

@@ -3,14 +3,16 @@ using System;
 using InvestCarWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InvestCarWeb.Migrations
 {
     [DbContext(typeof(IdentyDbContext))]
-    partial class IdentyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200624222440_NumConsultas")]
+    partial class NumConsultas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

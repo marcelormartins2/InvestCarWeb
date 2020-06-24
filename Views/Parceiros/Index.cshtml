@@ -33,11 +33,23 @@
                                 <div class="col-md-8">
                                     <div class="profile-name">
                                         <h3>@Model.UserName</h3>
-                                        <p class="job-title mb0"><i class="fa fa-building"></i> Administrador</p>
-                                        <p class="balance">
-                                            Investimento: <span>146$</span>
+                                        <p class="job-title mb0">
+                                            <i class="fa fa-building"></i>
+                                            @if (User.IsInRole("Administrador"))
+                                            {
+                                                <b>Administrador</b>
+                                            }
+                                            else
+                                            {
+                                                <b>Usuário</b>
+                                            }
                                         </p>
-                                        <a href="#" class="btn btn-primary btn-large mr10"> <i class="fa fa-envelope"></i> Editar dados</a>
+                                        <p class="balance">
+                                            Investimento: <span>0$</span>
+                                        </p>
+                                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-large mr10">
+                                                <i class="fa fa-envelope"></i> Editar dados
+                                            </a>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
