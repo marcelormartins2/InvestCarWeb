@@ -1,109 +1,119 @@
-﻿@(Html.DevExtreme().DataGrid()
-    .ID("gridContainer")
-    .DataSource(d => d
-        .OData()
-        .Url("https://js.devexpress.com/Demos/SalesViewer/odata/DaySaleDtoes")
-        .BeforeSend(@<text>
-            function(request) {
-                request.params.startDate = "2018-05-10";
-                request.params.endDate = "2018-05-15";
-            }
-        </text>)
-    )
-    .RemoteOperations(false)
-    .AllowColumnReordering(true)
-    .RowAlternationEnabled(true)
-    .ShowBorders(true)
-    .OnContentReady("contentReady")
-    .Paging(p => p.PageSize(10))
-    .Pager(p => p
-        .ShowPageSizeSelector(true)
-        .AllowedPageSizes(new[] {10, 25, 50, 100})
-    )
-    .SearchPanel(s => s
-        .Visible(true)
-        .HighlightCaseSensitive(true)
-    )
-    .GroupPanel(g => g.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .Columns(columns => {
-        columns.Add()
-            .DataField("Product")
-            .GroupIndex(0);
+﻿@model IEnumerable<InvestCarWeb.Models.Veiculo>
 
-        columns.Add()
-            .DataField("Amount")
-            .Caption("Sale Amount")
-            .DataType(GridColumnDataType.Number)
-            .Format(Format.Currency)
-            .Alignment(HorizontalAlignment.Right);
+@{
+    ViewData["Title"] = "Index";
+}
 
-        columns.Add()
-            .DataField("Discount")
-            .Caption("Discount %")
-            .DataType(GridColumnDataType.Number)
-            .Format(Format.Percent)
-            .Alignment(HorizontalAlignment.Right)
-            .AllowGrouping(false)
-            .CssClass("bullet")
-            .CellTemplate(@<text>
-                @(Html.DevExtreme().Bullet()
-                    .Value(new JS("value * 100"))
-                    .Size(s => s
-                        .Height(35)
-                        .Width(150)
-                    )
-                    .Margin(m => m
-                        .Top(5)
-                        .Bottom(0)
-                        .Left(5)
-                    )
-                    .ShowTarget(false)
-                    .ShowZeroLevel(true)
-                    .StartScaleValue(0)
-                    .EndScaleValue(100)
-                    .Tooltip(t => t
-                        .Enabled(true)
-                        .Font(f => f.Size(18))
-                        .PaddingTopBottom(2)
-                        .CustomizeTooltip("customizeTooltip")
-                    )
-                )
-            </text>);
+<h2>Index</h2>
 
-        columns.Add()
-            .DataField("SaleDate")
-            .DataType(GridColumnDataType.Date);
-
-        columns.Add()
-            .DataField("Region")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Sector")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Channel")
-            .DataType(GridColumnDataType.String);
-
-        columns.Add()
-            .DataField("Customer")
-            .DataType(GridColumnDataType.String)
-            .Width(150);
-    })
-)
-
-<script>
-    var collapsed = false;
-    function contentReady(e) {
-        if(!collapsed) {
-            collapsed = true;
-            e.component.expandRow(["EnviroCare"]);
-        }
-    }
-
-    function customizeTooltip(pointsInfo) {
-        return { text: parseInt(pointsInfo.originalValue) + "%" };
-    }
-</script>
+<p>
+    <a asp-action="Create">Cadastrar Carro</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DtCadastro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Placa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chassis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hodometro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnoFab)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnoModelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Origem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Renavam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorFipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorVenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Despesa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModeloCar)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtCadastro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Placa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chassis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hodometro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnoFab)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnoModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Renavam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorFipe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Despesa.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModeloCar.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
