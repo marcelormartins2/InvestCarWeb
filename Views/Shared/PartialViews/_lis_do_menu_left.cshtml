@@ -1,15 +1,43 @@
 ﻿
 
-<li><a asp-area="" asp-controller="Parceiros" asp-action="Index"><i class="glyphicon glyphicon-home"></i>
-    <span class="txt">Home</span></a></li>
-<li><a asp-area="" asp-controller="Veiculos" asp-action="Index"><i class="fa fa-car"></i>
-    <span class="txt">Veículos</span></a></li>
-<li><a asp-area="" asp-controller="Despesas" asp-action="Index"><i class="fa fa-dollar"></i>
-    <span class="txt">Despesas</span></a></li>
-<li><a asp-area="" asp-controller="Parceiros" asp-action="Lista"><i class="fa fa-user"></i>
-    <span class="txt">Parceiros</span></a></li>
-<li><a asp-area="" asp-controller="Parceiros" asp-action="Avatar"><i class="fa fa-laptop"></i>
-    <span class="txt">Avatar</span></a></li>
+<li>
+    <a asp-area="" asp-controller="Parceiros" asp-action="Index">
+        <i class="glyphicon glyphicon-home"></i>
+        <span class="txt">Home</span>
+    </a>
+</li>
+<li>
+    <a href="#"><i class="fa fa-car"></i><span class="txt">Veículos</span></a>
+    <ul class="sub">
+        <li>
+            <a asp-controller="Veiculos" asp-action="Index"><span class="txt">Cadastro</span></a>
+        </li>
+        <li>
+            <a asp-controller="Modelocars" asp-action="Index"><span class="txt">Modelos</span></a>
+        </li>
+        <li>
+            <a asp-controller="Fabricantes" asp-action="Index"><span class="txt">Fabricantes</span></a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a asp-area="" asp-controller="Despesas" asp-action="Index">
+        <i class="fa fa-dollar"></i>
+        <span class="txt">Despesas</span>
+    </a>
+</li>
+<li>
+    <a asp-area="" asp-controller="Parceiros" asp-action="Lista">
+        <i class="fa fa-user"></i>
+        <span class="txt">Parceiros</span>
+    </a>
+</li>
+<li>
+    <a asp-area="" asp-controller="Parceiros" asp-action="Avatar">
+        <i class="fa fa-laptop"></i>
+        <span class="txt">Avatar</span>
+    </a>
+</li>
 
 <li>
     <a href="#"><i class="l-ecommerce-graph1"></i> <span class="txt">Demo - Rotas</span></a>

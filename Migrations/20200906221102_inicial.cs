@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InvestCarWeb.Migrations
 {
-    public partial class intial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,21 +63,6 @@ namespace InvestCarWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Despesa", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Fabricante",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Site = table.Column<string>(nullable: true),
-                    Prioridade = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fabricante", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,31 +197,12 @@ namespace InvestCarWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Modelocar",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    FabricanteId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Modelocar", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Modelocar_Fabricante_FabricanteId",
-                        column: x => x.FabricanteId,
-                        principalTable: "Fabricante",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Veiculo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Modelo_Fabricante = table.Column<string>(nullable: true),
                     Placa = table.Column<string>(nullable: true),
                     Chassis = table.Column<string>(nullable: true),
                     Cor = table.Column<string>(nullable: true),
@@ -250,7 +216,8 @@ namespace InvestCarWeb.Migrations
                     ValorPago = table.Column<double>(nullable: true),
                     ValorVenda = table.Column<double>(nullable: true),
                     DespesaId = table.Column<int>(nullable: true),
-                    ModeloCarId = table.Column<int>(nullable: false)
+                    NumConsultas = table.Column<int>(nullable: false),
+                    DtCadastro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -261,12 +228,6 @@ namespace InvestCarWeb.Migrations
                         principalTable: "Despesa",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Veiculo_Modelocar_ModeloCarId",
-                        column: x => x.ModeloCarId,
-                        principalTable: "Modelocar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -333,11 +294,6 @@ namespace InvestCarWeb.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Modelocar_FabricanteId",
-                table: "Modelocar",
-                column: "FabricanteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Participacao_VeiculoId",
                 table: "Participacao",
                 column: "VeiculoId");
@@ -351,11 +307,6 @@ namespace InvestCarWeb.Migrations
                 name: "IX_Veiculo_DespesaId",
                 table: "Veiculo",
                 column: "DespesaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Veiculo_ModeloCarId",
-                table: "Veiculo",
-                column: "ModeloCarId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -392,12 +343,6 @@ namespace InvestCarWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "Despesa");
-
-            migrationBuilder.DropTable(
-                name: "Modelocar");
-
-            migrationBuilder.DropTable(
-                name: "Fabricante");
         }
     }
 }

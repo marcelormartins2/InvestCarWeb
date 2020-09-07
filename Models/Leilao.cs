@@ -4,21 +4,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvestCarWeb.Models
 {
-    public class Despesa
+    public class Leilao
     {
-        public Despesa()
+        public Leilao()
         {
-            Responsavel = new HashSet<Responsavel>();
-            Veiculo = new HashSet<Veiculo>();
+            Leiloeiro = new HashSet<Leiloeiro>();
         }
 
         public int Id { get; set; }
         public string Descricao { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime Data { get; set; }
-        public double Valor { get; set; }
+        public double TaxaAvaliacao { get; set; }
+        public double TaxaVenda { get; set; }
 
-        public ICollection<Responsavel> Responsavel { get; set; }
-        public ICollection<Veiculo> Veiculo { get; set; }
+        public ICollection<Leiloeiro> Leiloeiro { get; set; }
     }
 }

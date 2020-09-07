@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace InvestCarWeb.Data
 {
     public class IdentyDbContext : IdentityDbContext<Parceiro>
@@ -12,16 +13,23 @@ namespace InvestCarWeb.Data
         }
 
         public virtual DbSet<Despesa> Despesa { get; set; }
-        public virtual DbSet<Fabricante> Fabricante { get; set; }
-        public virtual DbSet<Modelocar> Modelocar { get; set; }
         public virtual DbSet<Parceiro> Parceiro { get; set; }
         public virtual DbSet<Participacao> Participacao { get; set; }
         public virtual DbSet<Responsavel> Responsavel { get; set; }
         public virtual DbSet<Veiculo> Veiculo { get; set; }
+        public virtual DbSet<Produto> Produto { get; set; }
+        public virtual DbSet<LeilaoProduto> LeilaoProduto { get; set; }
+        public virtual DbSet<Leilao> Leilao { get; set; }
+        public virtual DbSet<Leiloeiro> Leiloeiro { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<LeilaoProduto>()
+                .HasKey(pf => new { pf.ProdutoId, pf.LeilaoId});
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder
                 .Entity<Participacao>()
                 .HasKey(pf => new { pf.ParceiroId, pf.VeiculoId });

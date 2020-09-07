@@ -3,28 +3,27 @@ using InvestCarWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace InvestCarWeb.Controllers
 {
-    public class ModelocarsController : Controller
+    public class ProdutosController : Controller
     {
+
         private readonly IdentyDbContext _context;
 
-        public ModelocarsController(IdentyDbContext context)
+        public ProdutosController(IdentyDbContext context)
         {
             _context = context;
         }
 
-        // GET: Modelocars
         public async Task<IActionResult> Index()
         {
-            var IdentyDbContext = _context.Modelocar.Include(m => m.Fabricante);
-            return View(await IdentyDbContext.ToListAsync());
+            return View(await _context.Produto.ToListAsync());
         }
 
-        // GET: Modelocars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,42 +31,36 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var modelocar = await _context.Modelocar
-                .Include(m => m.Fabricante)
+            var produto = await _context.Produto
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (modelocar == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(modelocar);
+            return View(produto);
         }
 
-        // GET: Modelocars/Create
         public IActionResult Create()
         {
-            ViewData["FabricanteId"] = new SelectList(_context.Fabricante, "Id", "Id");
             return View();
         }
 
-        // POST: Modelocars/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Produtos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,FabricanteId")] Modelocar modelocar)
+        public async Task<IActionResult> Create([Bind("Id, Descricao, Data, VlAnunciado, VlPago, VlVendido, Bairro, Endereco, Localizacao, Anuncio, Telefone, Vendedor")] Produto produto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(modelocar);
+                _context.Add(produto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FabricanteId"] = new SelectList(_context.Fabricante, "Id", "Id", modelocar.FabricanteId);
-            return View(modelocar);
+            return View(produto);
         }
 
-        // GET: Modelocars/Edit/5
+        // GET: Produtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,23 +68,22 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var modelocar = await _context.Modelocar.FindAsync(id);
-            if (modelocar == null)
+            var produto = await _context.Produto.FindAsync(id);
+            if (produto == null)
             {
                 return NotFound();
             }
-            ViewData["FabricanteId"] = new SelectList(_context.Fabricante, "Id", "Id", modelocar.FabricanteId);
-            return View(modelocar);
+            return View(produto);
         }
 
-        // POST: Modelocars/Edit/5
+        // POST: Produtos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,FabricanteId")] Modelocar modelocar)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Descricao, Data, VlAnunciado, VlPago, VlVendido, Bairro, Endereco, Localizacao, Anuncio, Telefone, Vendedor")] Produto produto)
         {
-            if (id != modelocar.Id)
+            if (id != produto.Id)
             {
                 return NotFound();
             }
@@ -100,12 +92,12 @@ namespace InvestCarWeb.Controllers
             {
                 try
                 {
-                    _context.Update(modelocar);
+                    _context.Update(produto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ModelocarExists(modelocar.Id))
+                    if (!ProdutoExists(produto.Id))
                     {
                         return NotFound();
                     }
@@ -116,11 +108,10 @@ namespace InvestCarWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FabricanteId"] = new SelectList(_context.Fabricante, "Id", "Id", modelocar.FabricanteId);
-            return View(modelocar);
+            return View(produto);
         }
 
-        // GET: Modelocars/Delete/5
+        // GET: Produtos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,31 +119,30 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var modelocar = await _context.Modelocar
-                .Include(m => m.Fabricante)
+            var produto = await _context.Produto
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (modelocar == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(modelocar);
+            return View(produto);
         }
 
-        // POST: Modelocars/Delete/5
+        // POST: Produtos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var modelocar = await _context.Modelocar.FindAsync(id);
-            _context.Modelocar.Remove(modelocar);
+            var produto = await _context.Produto.FindAsync(id);
+            _context.Produto.Remove(produto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ModelocarExists(int id)
+        private bool ProdutoExists(int id)
         {
-            return _context.Modelocar.Any(e => e.Id == id);
+            return _context.Produto.Any(e => e.Id == id);
         }
     }
 }

@@ -3,6 +3,7 @@ using InvestCarWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,8 +21,8 @@ namespace InvestCarWeb.Controllers
         // GET: Veiculos
         public async Task<IActionResult> Index()
         {
-            //var veiculo = _context.Veiculo.Include(v => v.Despesa).Include(v => v.ModeloCar);
-            return View(await _context.Veiculo.ToListAsync());
+            var veiculo = _context.Veiculo.Include(v => v.Despesa);
+            return View(await veiculo.ToListAsync());
         }
 
         // GET: Veiculos/Details/5
@@ -34,7 +35,6 @@ namespace InvestCarWeb.Controllers
 
             var veiculo = await _context.Veiculo
                 .Include(v => v.Despesa)
-                .Include(v => v.ModeloCar)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (veiculo == null)
             {
@@ -48,13 +48,10 @@ namespace InvestCarWeb.Controllers
         public IActionResult Create()
         {
             ViewData["DespesaId"] = new SelectList(_context.Despesa, "Id", "Id");
-            ViewData["ModeloCarId"] = new SelectList(_context.Modelocar, "Id", "Id");
             return View();
         }
 
         // POST: Veiculos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Placa,Chassis,Cor,Dut,Hodometro,AnoFab,AnoModelo,Origem,Renavam,ValorFipe,ValorPago,ValorVenda,DespesaId,ModeloCarId")] Veiculo veiculo)
@@ -66,7 +63,6 @@ namespace InvestCarWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DespesaId"] = new SelectList(_context.Despesa, "Id", "Id", veiculo.DespesaId);
-            ViewData["ModeloCarId"] = new SelectList(_context.Modelocar, "Id", "Id", veiculo.ModeloCarId);
             return View(veiculo);
         }
 
@@ -84,7 +80,6 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
             ViewData["DespesaId"] = new SelectList(_context.Despesa, "Id", "Id", veiculo.DespesaId);
-            ViewData["ModeloCarId"] = new SelectList(_context.Modelocar, "Id", "Id", veiculo.ModeloCarId);
             return View(veiculo);
         }
 
@@ -121,7 +116,6 @@ namespace InvestCarWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DespesaId"] = new SelectList(_context.Despesa, "Id", "Id", veiculo.DespesaId);
-            ViewData["ModeloCarId"] = new SelectList(_context.Modelocar, "Id", "Id", veiculo.ModeloCarId);
             return View(veiculo);
         }
 
@@ -135,7 +129,6 @@ namespace InvestCarWeb.Controllers
 
             var veiculo = await _context.Veiculo
                 .Include(v => v.Despesa)
-                .Include(v => v.ModeloCar)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (veiculo == null)
             {
