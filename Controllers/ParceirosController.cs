@@ -226,15 +226,15 @@ namespace InvestCarWeb.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var participacao = await _context.Participacao
-                .FirstOrDefaultAsync(m => m.ParceiroId == id);
-            var responsavel = await _context.Responsavel
-                .FirstOrDefaultAsync(m => m.ParceiroId == id);
-            if (participacao != null || responsavel != null)
+                .FirstOrDefaultAsync(m => m.Parceiro.Id == id);
+            var despesa = await _context.Despesa
+                .FirstOrDefaultAsync(m => m.Parceiro.Id == id);
+            if (participacao != null || despesa != null)
             {
                 var txtMensagem = "";
                 if (participacao != null)
                 {
-                    if (responsavel != null)
+                    if (despesa != null)
                     {
                         txtMensagem = "Não é possível excluir o Parceiro," +
                              " pois ele tem participação em algum veículo" +

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestCarWeb.Migrations
 {
     [DbContext(typeof(IdentyDbContext))]
-    [Migration("20200907210928_ProdutoLeilao2")]
-    partial class ProdutoLeilao2
+    [Migration("20200910221204_segunda")]
+    partial class segunda
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,10 +31,26 @@ namespace InvestCarWeb.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("ParceiroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParceiroId1")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<double>("Valor")
                         .HasColumnType("double");
 
+                    b.Property<int>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VeiculoId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParceiroId1");
+
+                    b.HasIndex("VeiculoId1");
 
                     b.ToTable("Despesa");
                 });
@@ -51,6 +67,9 @@ namespace InvestCarWeb.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("LeiloeiroId")
+                        .HasColumnType("int");
+
                     b.Property<double>("TaxaAvaliacao")
                         .HasColumnType("double");
 
@@ -59,37 +78,43 @@ namespace InvestCarWeb.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LeiloeiroId");
+
                     b.ToTable("Leilao");
                 });
 
             modelBuilder.Entity("InvestCarWeb.Models.LeilaoProduto", b =>
                 {
-                    b.Property<string>("ProdutoId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<int>("LeilaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Lote")
-                        .HasColumnType("int");
+                    b.Property<string>("Lote")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("ProdutoId1")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
                     b.Property<double>("VlAvalicao")
                         .HasColumnType("double");
 
-                    b.Property<double>("VlCondicional")
+                    b.Property<double?>("VlCondicional")
                         .HasColumnType("double");
 
-                    b.Property<double>("VlVenda")
+                    b.Property<double?>("VlLance")
                         .HasColumnType("double");
 
-                    b.HasKey("ProdutoId", "LeilaoId");
+                    b.Property<double?>("VlPago")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("LeilaoId");
 
-                    b.HasIndex("ProdutoId1");
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("LeilaoProduto");
                 });
@@ -98,9 +123,6 @@ namespace InvestCarWeb.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LeilaoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -119,8 +141,6 @@ namespace InvestCarWeb.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LeilaoId");
 
                     b.ToTable("Leiloeiro");
                 });
@@ -200,11 +220,15 @@ namespace InvestCarWeb.Migrations
 
             modelBuilder.Entity("InvestCarWeb.Models.Participacao", b =>
                 {
-                    b.Property<string>("ParceiroId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<int>("VeiculoId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<int>("ParceiroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParceiroId1")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("PorcentagemCompra")
                         .HasColumnType("double");
@@ -212,7 +236,12 @@ namespace InvestCarWeb.Migrations
                     b.Property<double>("PorcentagemLucro")
                         .HasColumnType("double");
 
-                    b.HasKey("ParceiroId", "VeiculoId");
+                    b.Property<int>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParceiroId1");
 
                     b.HasIndex("VeiculoId");
 
@@ -243,42 +272,32 @@ namespace InvestCarWeb.Migrations
                     b.Property<string>("Localizacao")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("ParceiroId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<string>("Telefone")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Vendedor")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("VlAnunciado")
+                    b.Property<double?>("VlAnunciado")
                         .HasColumnType("double");
 
-                    b.Property<double>("VlPago")
+                    b.Property<double?>("VlNegociado")
                         .HasColumnType("double");
 
-                    b.Property<double>("VlVendido")
+                    b.Property<double?>("VlPago")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("VlVendido")
                         .HasColumnType("double");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParceiroId");
+
                     b.ToTable("Produto");
-                });
-
-            modelBuilder.Entity("InvestCarWeb.Models.Responsavel", b =>
-                {
-                    b.Property<string>("ParceiroId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<int>("DespesaId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Valor")
-                        .HasColumnType("double");
-
-                    b.HasKey("ParceiroId", "DespesaId");
-
-                    b.HasIndex("DespesaId");
-
-                    b.ToTable("Responsavel");
                 });
 
             modelBuilder.Entity("InvestCarWeb.Models.Veiculo", b =>
@@ -336,8 +355,6 @@ namespace InvestCarWeb.Migrations
                         .HasColumnType("double");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DespesaId");
 
                     b.ToTable("Veiculo");
                 });
@@ -474,6 +491,26 @@ namespace InvestCarWeb.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("InvestCarWeb.Models.Despesa", b =>
+                {
+                    b.HasOne("InvestCarWeb.Models.Parceiro", "Parceiro")
+                        .WithMany()
+                        .HasForeignKey("ParceiroId1");
+
+                    b.HasOne("InvestCarWeb.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId1");
+                });
+
+            modelBuilder.Entity("InvestCarWeb.Models.Leilao", b =>
+                {
+                    b.HasOne("InvestCarWeb.Models.Leiloeiro", "Leiloeiro")
+                        .WithMany()
+                        .HasForeignKey("LeiloeiroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("InvestCarWeb.Models.LeilaoProduto", b =>
                 {
                     b.HasOne("InvestCarWeb.Models.Leilao", "Leilao")
@@ -484,51 +521,29 @@ namespace InvestCarWeb.Migrations
 
                     b.HasOne("InvestCarWeb.Models.Produto", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoId1");
-                });
-
-            modelBuilder.Entity("InvestCarWeb.Models.Leiloeiro", b =>
-                {
-                    b.HasOne("InvestCarWeb.Models.Leilao", null)
-                        .WithMany("Leiloeiro")
-                        .HasForeignKey("LeilaoId");
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("InvestCarWeb.Models.Participacao", b =>
                 {
                     b.HasOne("InvestCarWeb.Models.Parceiro", "Parceiro")
-                        .WithMany("Participacao")
-                        .HasForeignKey("ParceiroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ParceiroId1");
 
                     b.HasOne("InvestCarWeb.Models.Veiculo", "Veiculo")
-                        .WithMany("Participacao")
+                        .WithMany()
                         .HasForeignKey("VeiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("InvestCarWeb.Models.Responsavel", b =>
+            modelBuilder.Entity("InvestCarWeb.Models.Produto", b =>
                 {
-                    b.HasOne("InvestCarWeb.Models.Despesa", "Despesa")
-                        .WithMany("Responsavel")
-                        .HasForeignKey("DespesaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("InvestCarWeb.Models.Parceiro", "Parceiro")
-                        .WithMany("Responsavel")
-                        .HasForeignKey("ParceiroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("InvestCarWeb.Models.Veiculo", b =>
-                {
-                    b.HasOne("InvestCarWeb.Models.Despesa", "Despesa")
-                        .WithMany("Veiculo")
-                        .HasForeignKey("DespesaId");
+                        .WithMany()
+                        .HasForeignKey("ParceiroId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

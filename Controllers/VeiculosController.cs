@@ -21,7 +21,7 @@ namespace InvestCarWeb.Controllers
         // GET: Veiculos
         public async Task<IActionResult> Index()
         {
-            var veiculo = _context.Veiculo.Include(v => v.Despesa);
+            var veiculo = _context.Veiculo;
             return View(await veiculo.ToListAsync());
         }
 
@@ -34,7 +34,6 @@ namespace InvestCarWeb.Controllers
             }
 
             var veiculo = await _context.Veiculo
-                .Include(v => v.Despesa)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (veiculo == null)
             {
@@ -127,9 +126,38 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var veiculo = await _context.Veiculo
-                .Include(v => v.Despesa)
+            var participacao = await _context.Participacao
+               .FirstOrDefaultAsync(m => m.Veiculo.Id == id);
+            var despesa = await _context.Despesa
+                .FirstOrDefaultAsync(m => m.Veiculo.Id == id);
+            if (participacao != null || despesa != null)
+            {
+                var txtMensagem = "";
+                if (participacao != null)
+                {
+                    if (despesa != null)
+                    {
+                        txtMensagem = "Não é possível excluir o Veiculo," +
+                             " pois ele tem participações de parceiros e despesas cadastradas. Exclua todas as participações e despesas vinculadas à este veículo para depois excluí-lo";
+                    }
+                    else
+                    {
+                        txtMensagem = "Não é possível excluir o Veiculo," +
+                             " pois ele tem participações de parceiros cadastradas. Exclua todas as participações vinculadas à este veículo para depois excluí-lo";
+                    }
+                }
+                else
+                {
+                    txtMensagem = "Não é possível excluir o Veiculo," +
+                         " pois ele tem despesas cadastradas. Exclua todas as despesas vinculadas à este veículo para depois excluí-lo";
+                }
+                ViewData["Mensagem"] = txtMensagem;
+                return View("Error");
+            }
+
+                var veiculo = await _context.Veiculo
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (veiculo == null)
             {
                 return NotFound();

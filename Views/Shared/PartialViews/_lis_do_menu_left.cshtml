@@ -7,18 +7,24 @@
     </a>
 </li>
 <li>
-    <a href="#"><i class="fa fa-car"></i><span class="txt">Veículos</span></a>
+    <a asp-controller="Produtos" asp-action="Index"><span class="txt">Produtos</span></a>
+</li>
+<li>
+    <a href="#"><i class="l-ecommerce-graph1"></i> <span class="txt">Leilões</span></a>
     <ul class="sub">
         <li>
-            <a asp-controller="Veiculos" asp-action="Index"><span class="txt">Cadastro</span></a>
+            <a asp-controller="Leiloes" asp-action="Index"><span class="txt">Lista</span></a>
         </li>
         <li>
-            <a asp-controller="Modelocars" asp-action="Index"><span class="txt">Modelos</span></a>
+            <a asp-controller="Leiloeiros" asp-action="Index"><span class="txt">Leiloeiros</span></a>
         </li>
         <li>
-            <a asp-controller="Fabricantes" asp-action="Index"><span class="txt">Fabricantes</span></a>
+            <a asp-controller="LeilaoProdutos" asp-action="Index"><span class="txt">Lotes</span></a>
         </li>
     </ul>
+</li>
+<li>
+    <a asp-controller="Veiculos" asp-action="Index"><span class="txt">Veiculos</span></a>
 </li>
 <li>
     <a asp-area="" asp-controller="Despesas" asp-action="Index">

@@ -7,14 +7,16 @@ namespace InvestCarWeb.Models
 {
     public class LeilaoProduto
     {
-        public int ProdutoId { get; set; }
-        public int LeilaoId { get; set; }
-        public int Lote { get; set; }
+        public int Id { get; set; }
+        public string Lote { get; set; }
         public double VlAvalicao { get; set; }
-        public double VlCondicional { get; set; }
-        public double VlVenda { get; set; }
+        public double? VlCondicional { get; set; }
+        public double? VlPago { get; set; }
+        public double? VlLance { get; set; }
 
         public Produto Produto { get; set; }
+        public int ProdutoId { get; set; }
         public Leilao Leilao { get; set; }
+        public int LeilaoId { get; set; }
     }
 }

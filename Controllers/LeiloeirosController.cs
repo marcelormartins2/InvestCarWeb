@@ -1,27 +1,36 @@
-﻿using InvestCarWeb.Data;
-using InvestCarWeb.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestCarWeb.Data;
+using InvestCarWeb.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestCarWeb.Controllers
 {
-    public class LeiloesController : Controller
+    public class LeiloeirosController : Controller
     {
         private readonly IdentyDbContext _context;
+        //private readonly UserManager<Parceiro> _userManager;
+        //private readonly SignInManager<Parceiro> _signInManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
 
-        public LeiloesController(IdentyDbContext context)
+        public LeiloeirosController(IdentyDbContext context
+        //UserManager<Parceiro> userManager,
+        //SignInManager<Parceiro> signInManager
+        //RoleManager<IdentityRole> roleManager,
+        )
         {
             _context = context;
+            //_userManager = userManager;
+            //_signInManager = signInManager;
+            //_roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var leilao = _context.Leilao.Include(m => m.Leiloeiro).ToListAsync();
-            return View(await leilao);
+            return View(await _context.Leiloeiro.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -31,63 +40,59 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var leilao = await _context.Leilao
-                .Include(m=> m.Leiloeiro)
+            var leiloeiro = await _context.Leiloeiro
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (leilao == null)
+            if (leiloeiro == null)
             {
                 return NotFound();
             }
 
-            return View(leilao);
+            return View(leiloeiro);
         }
 
         public IActionResult Create()
         {
-            ViewData["leiloeiros"] = new SelectList(_context.Leiloeiro, "Id", "Nome");
             return View();
         }
 
-        // POST: Leiloes/Create
+        // POST: Leiloeiros/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Leilao leilao)
+        public async Task<IActionResult> Create(Leiloeiro leiloeiro)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leilao);
+                _context.Add(leiloeiro);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leilao);
+            return View(leiloeiro);
         }
 
-        // GET: Leiloes/Edit/5
+        // GET: Leiloeiros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            ViewData["leiloeiros"] = new SelectList(_context.Leiloeiro, "Id", "Nome");
-            var leilao = await _context.Leilao
-                .Include(m=> m.Leiloeiro)
-                .FirstOrDefaultAsync(m=> m.Id == id);
-            if (leilao == null)
+
+            var leiloeiro = await _context.Leiloeiro.FindAsync(id);
+            if (leiloeiro == null)
             {
                 return NotFound();
             }
-            return View(leilao);
+            return View(leiloeiro);
         }
 
-        // POST: Leiloes/Edit/5
+        // POST: Leiloeiros/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Leilao leilao)
+        public async Task<IActionResult> Edit(int id, Leiloeiro leiloeiro)
         {
-            if (id != leilao.Id)
+            if (id != leiloeiro.Id)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace InvestCarWeb.Controllers
             {
                 try
                 {
-                    _context.Update(leilao);
+                    _context.Update(leiloeiro);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LeilaoExists(leilao.Id))
+                    if (!LeiloeiroExists(leiloeiro.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,10 @@ namespace InvestCarWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leilao);
+            return View(leiloeiro);
         }
 
-        // GET: Leiloes/Delete/5
+        // GET: Leiloeiros/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +128,30 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var leilao = await _context.Leilao
+            var leiloeiro = await _context.Leiloeiro
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (leilao == null)
+            if (leiloeiro == null)
             {
                 return NotFound();
             }
 
-            return View(leilao);
+            return View(leiloeiro);
         }
 
-        // POST: Leiloes/Delete/5
+        // POST: Leiloeiros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var leilao = await _context.Leilao.FindAsync(id);
-            _context.Leilao.Remove(leilao);
+            var leiloeiro = await _context.Leiloeiro.FindAsync(id);
+            _context.Leiloeiro.Remove(leiloeiro);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LeilaoExists(int id)
+        private bool LeiloeiroExists(int id)
         {
-            return _context.Leilao.Any(e => e.Id == id);
+            return _context.Leiloeiro.Any(e => e.Id == id);
         }
     }
 }

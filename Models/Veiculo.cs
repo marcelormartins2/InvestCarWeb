@@ -7,11 +7,6 @@ namespace InvestCarWeb.Models
 {
     public class Veiculo
     {
-        public Veiculo()
-        {
-            Participacao = new HashSet<Participacao>();
-        }
-
         public int Id { get; set; }
         public string Modelo_Fabricante { get; set; }
         public string Placa { get; set; }
@@ -39,8 +34,5 @@ namespace InvestCarWeb.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yy}")]
         [DisplayName(displayName: "DtCompra")]
         public DateTime DtCadastro { get; set; }
-
-        public Despesa Despesa { get; set; }
-        public ICollection<Participacao> Participacao { get; set; }
     }
 }

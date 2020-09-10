@@ -31,7 +31,7 @@ namespace InvestCarWeb.Controllers
             }
 
             var leilaoProduto = await _context.LeilaoProduto
-                .FirstOrDefaultAsync(m => m.ProdutoId == produtoId && m.LeilaoId == leilaoId);
+                .FirstOrDefaultAsync(m => m.Produto.Id == produtoId && m.Leilao.Id == leilaoId);
             if (leilaoProduto == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace InvestCarWeb.Controllers
             return View(leilaoProduto);
         }
 
-        // GET: Veiculos/Edit/5
+        // GET: LeilaoProdutos/Edit/5
         public async Task<IActionResult> Edit(int? produtoId, int? leilaoId)
         {
             if (produtoId == null || leilaoId == null)
@@ -75,14 +75,14 @@ namespace InvestCarWeb.Controllers
             return View(leilaoProduto);
         }
 
-        // POST: Veiculos/Edit/5
+        // POST: LeilaoProdutos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int leilaoId, int produtoId, LeilaoProduto leilaoProduto)
         {
-            if (leilaoId != leilaoProduto.LeilaoId || produtoId != leilaoProduto.ProdutoId)
+            if (leilaoId != leilaoProduto.Leilao.Id || produtoId != leilaoProduto.Produto.Id)
             {
                 return NotFound();
             }
@@ -96,7 +96,7 @@ namespace InvestCarWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!leilaoProdutoExists(leilaoProduto.ProdutoId, leilaoProduto.LeilaoId))
+                    if (!leilaoProdutoExists(leilaoProduto.Produto.Id, leilaoProduto.Leilao.Id))
                     {
                         return NotFound();
                     }
@@ -110,7 +110,7 @@ namespace InvestCarWeb.Controllers
             return View(leilaoProduto);
         }
 
-        // GET: Veiculos/Delete/5
+        // GET: LeilaoProdutos/Delete/5
         public async Task<IActionResult> Delete(int? produtoId, int? leilaoId)
         {
             if (produtoId == null || leilaoId == null)
@@ -119,7 +119,7 @@ namespace InvestCarWeb.Controllers
             }
 
             var leilaoProduto = await _context.LeilaoProduto
-                .FirstOrDefaultAsync(m => m.ProdutoId == produtoId && m.LeilaoId == leilaoId);
+                .FirstOrDefaultAsync(m => m.Produto.Id == produtoId && m.Leilao.Id == leilaoId);
             if (leilaoProduto == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace InvestCarWeb.Controllers
             return View(leilaoProduto);
         }
 
-        // POST: Veiculos/Delete/5
+        // POST: LeilaoProdutos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? produtoId, int? leilaoId)
@@ -141,7 +141,7 @@ namespace InvestCarWeb.Controllers
 
         private bool leilaoProdutoExists(int? produtoId, int? leilaoId)
         {
-            return _context.LeilaoProduto.Any(e => e.ProdutoId == produtoId && e.LeilaoId == leilaoId);
+            return _context.LeilaoProduto.Any(e => e.Produto.Id == produtoId && e.Leilao.Id == leilaoId);
         }
     }
 }

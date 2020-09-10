@@ -35,7 +35,7 @@ namespace InvestCarWeb.Controllers
             var participacao = await _context.Participacao
                 .Include(p => p.Parceiro)
                 .Include(p => p.Veiculo)
-                .FirstOrDefaultAsync(m => m.ParceiroId == id);
+                .FirstOrDefaultAsync(m => m.Parceiro.Id == id);
             if (participacao == null)
             {
                 return NotFound();
@@ -47,8 +47,8 @@ namespace InvestCarWeb.Controllers
         // GET: Participacoes/Create
         public IActionResult Create()
         {
-            ViewData["ParceiroId"] = new SelectList(_context.Parceiro, "Id", "Id");
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculo, "Id", "Id");
+            ViewData["Parceiro.Id"] = new SelectList(_context.Parceiro, "Id", "Id");
+            ViewData["Veiculo.Id"] = new SelectList(_context.Veiculo, "Id", "Id");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace InvestCarWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParceiroId,VeiculoId,PorcentagemCompra,PorcentagemLucro")] Participacao participacao)
+        public async Task<IActionResult> Create([Bind("Parceiro.Id,Veiculo.Id,PorcentagemCompra,PorcentagemLucro")] Participacao participacao)
         {
             if (ModelState.IsValid)
             {
@@ -65,8 +65,8 @@ namespace InvestCarWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParceiroId"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.ParceiroId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.VeiculoId);
+            ViewData["Parceiro.Id"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.Parceiro.Id);
+            ViewData["Veiculo.Id"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.Veiculo.Id);
             return View(participacao);
         }
 
@@ -83,8 +83,8 @@ namespace InvestCarWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["ParceiroId"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.ParceiroId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.VeiculoId);
+            ViewData["Parceiro.Id"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.Parceiro.Id);
+            ViewData["Veiculo.Id"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.Veiculo.Id);
             return View(participacao);
         }
 
@@ -93,9 +93,9 @@ namespace InvestCarWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ParceiroId,VeiculoId,PorcentagemCompra,PorcentagemLucro")] Participacao participacao)
+        public async Task<IActionResult> Edit(string id, [Bind("Parceiro.Id,Veiculo.Id,PorcentagemCompra,PorcentagemLucro")] Participacao participacao)
         {
-            if (id != participacao.ParceiroId)
+            if (id != participacao.Parceiro.Id)
             {
                 return NotFound();
             }
@@ -109,7 +109,7 @@ namespace InvestCarWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ParticipacaoExists(participacao.ParceiroId))
+                    if (!ParticipacaoExists(participacao.Parceiro.Id))
                     {
                         return NotFound();
                     }
@@ -120,8 +120,8 @@ namespace InvestCarWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParceiroId"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.ParceiroId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.VeiculoId);
+            ViewData["Parceiro.Id"] = new SelectList(_context.Parceiro, "Id", "Id", participacao.Parceiro.Id);
+            ViewData["Veiculo.Id"] = new SelectList(_context.Veiculo, "Id", "Id", participacao.Veiculo.Id);
             return View(participacao);
         }
 
@@ -136,7 +136,7 @@ namespace InvestCarWeb.Controllers
             var participacao = await _context.Participacao
                 .Include(p => p.Parceiro)
                 .Include(p => p.Veiculo)
-                .FirstOrDefaultAsync(m => m.ParceiroId == id);
+                .FirstOrDefaultAsync(m => m.Parceiro.Id == id);
             if (participacao == null)
             {
                 return NotFound();
@@ -158,7 +158,7 @@ namespace InvestCarWeb.Controllers
 
         private bool ParticipacaoExists(string id)
         {
-            return _context.Participacao.Any(e => e.ParceiroId == id);
+            return _context.Participacao.Any(e => e.Parceiro.Id == id);
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using InvestCarWeb.Data;
 using InvestCarWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,15 +12,26 @@ namespace InvestCarWeb.Controllers
     {
 
         private readonly IdentyDbContext _context;
+        private readonly UserManager<Parceiro> _userManager;
+        private readonly SignInManager<Parceiro> _signInManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
 
-        public ProdutosController(IdentyDbContext context)
+            public ProdutosController(IdentyDbContext context,
+            UserManager<Parceiro> userManager,
+            SignInManager< Parceiro > signInManager
+            //RoleManager<IdentityRole> roleManager,
+            )
         {
-            _context = context;
+                _userManager = userManager;
+                _signInManager = signInManager;
+                //_roleManager = roleManager;
+                _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Produto.ToListAsync());
+            var produto = _context.Produto.Include(a => a.Parceiro).Where(b => b.Parceiro.UserName == User.Identity.Name).ToListAsync();
+            return View(await produto);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -49,10 +59,12 @@ namespace InvestCarWeb.Controllers
         // POST: Produtos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Descricao, Data, VlAnunciado, VlPago, VlVendido, Bairro, Endereco, Localizacao, Anuncio, Telefone, Vendedor")] Produto produto)
+        public async Task<IActionResult> Create(Produto produto)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                produto.Parceiro = user;
                 _context.Add(produto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

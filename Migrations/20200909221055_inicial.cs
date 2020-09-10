@@ -51,18 +51,48 @@ namespace InvestCarWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Despesa",
+                name: "Leiloeiro",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Descricao = table.Column<string>(nullable: true),
-                    Data = table.Column<DateTime>(nullable: false),
-                    Valor = table.Column<double>(nullable: false)
+                    Nome = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Site = table.Column<string>(nullable: true),
+                    TaxaAvaliacaoPadrao = table.Column<double>(nullable: false),
+                    TaxaVendaPadrao = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Despesa", x => x.Id);
+                    table.PrimaryKey("PK_Leiloeiro", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Veiculo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Modelo_Fabricante = table.Column<string>(nullable: true),
+                    Placa = table.Column<string>(nullable: true),
+                    Chassis = table.Column<string>(nullable: true),
+                    Cor = table.Column<string>(nullable: true),
+                    Dut = table.Column<string>(nullable: true),
+                    Hodometro = table.Column<int>(nullable: true),
+                    AnoFab = table.Column<int>(nullable: false),
+                    AnoModelo = table.Column<int>(nullable: false),
+                    Origem = table.Column<string>(nullable: true),
+                    Renavam = table.Column<int>(nullable: true),
+                    ValorFipe = table.Column<double>(nullable: true),
+                    ValorPago = table.Column<double>(nullable: true),
+                    ValorVenda = table.Column<double>(nullable: true),
+                    DespesaId = table.Column<int>(nullable: true),
+                    NumConsultas = table.Column<int>(nullable: false),
+                    DtCadastro = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Veiculo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,60 +202,86 @@ namespace InvestCarWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Responsavel",
+                name: "Produto",
                 columns: table => new
                 {
-                    DespesaId = table.Column<int>(nullable: false),
-                    ParceiroId = table.Column<string>(nullable: false),
-                    Valor = table.Column<double>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(nullable: true),
+                    Data = table.Column<DateTime>(nullable: false),
+                    VlAnunciado = table.Column<double>(nullable: true),
+                    VlNegociado = table.Column<double>(nullable: true),
+                    VlPago = table.Column<double>(nullable: true),
+                    VlVendido = table.Column<double>(nullable: true),
+                    Bairro = table.Column<string>(nullable: true),
+                    Endereco = table.Column<string>(nullable: true),
+                    Localizacao = table.Column<string>(nullable: true),
+                    Anuncio = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Vendedor = table.Column<string>(nullable: true),
+                    ParceiroId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Responsavel", x => new { x.ParceiroId, x.DespesaId });
+                    table.PrimaryKey("PK_Produto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Responsavel_Despesa_DespesaId",
-                        column: x => x.DespesaId,
-                        principalTable: "Despesa",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Responsavel_AspNetUsers_ParceiroId",
+                        name: "FK_Produto_AspNetUsers_ParceiroId",
                         column: x => x.ParceiroId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Leilao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(nullable: true),
+                    Data = table.Column<DateTime>(nullable: false),
+                    TaxaAvaliacao = table.Column<double>(nullable: false),
+                    TaxaVenda = table.Column<double>(nullable: false),
+                    LeiloeiroId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leilao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Leilao_Leiloeiro_LeiloeiroId",
+                        column: x => x.LeiloeiroId,
+                        principalTable: "Leiloeiro",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Veiculo",
+                name: "Despesa",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Modelo_Fabricante = table.Column<string>(nullable: true),
-                    Placa = table.Column<string>(nullable: true),
-                    Chassis = table.Column<string>(nullable: true),
-                    Cor = table.Column<string>(nullable: true),
-                    Dut = table.Column<string>(nullable: true),
-                    Hodometro = table.Column<int>(nullable: true),
-                    AnoFab = table.Column<int>(nullable: false),
-                    AnoModelo = table.Column<int>(nullable: false),
-                    Origem = table.Column<string>(nullable: true),
-                    Renavam = table.Column<int>(nullable: true),
-                    ValorFipe = table.Column<double>(nullable: true),
-                    ValorPago = table.Column<double>(nullable: true),
-                    ValorVenda = table.Column<double>(nullable: true),
-                    DespesaId = table.Column<int>(nullable: true),
-                    NumConsultas = table.Column<int>(nullable: false),
-                    DtCadastro = table.Column<DateTime>(nullable: false)
+                    Descricao = table.Column<string>(nullable: true),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Valor = table.Column<double>(nullable: false),
+                    VeiculoId1 = table.Column<int>(nullable: true),
+                    VeiculoId = table.Column<int>(nullable: false),
+                    ParceiroId1 = table.Column<string>(nullable: true),
+                    ParceiroId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Veiculo", x => x.Id);
+                    table.PrimaryKey("PK_Despesa", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Veiculo_Despesa_DespesaId",
-                        column: x => x.DespesaId,
-                        principalTable: "Despesa",
+                        name: "FK_Despesa_AspNetUsers_ParceiroId1",
+                        column: x => x.ParceiroId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Despesa_Veiculo_VeiculoId1",
+                        column: x => x.VeiculoId1,
+                        principalTable: "Veiculo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -234,24 +290,58 @@ namespace InvestCarWeb.Migrations
                 name: "Participacao",
                 columns: table => new
                 {
-                    ParceiroId = table.Column<string>(nullable: false),
-                    VeiculoId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PorcentagemCompra = table.Column<double>(nullable: false),
-                    PorcentagemLucro = table.Column<double>(nullable: false)
+                    PorcentagemLucro = table.Column<double>(nullable: false),
+                    ParceiroId1 = table.Column<string>(nullable: true),
+                    ParceiroId = table.Column<int>(nullable: false),
+                    VeiculoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participacao", x => new { x.ParceiroId, x.VeiculoId });
+                    table.PrimaryKey("PK_Participacao", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participacao_AspNetUsers_ParceiroId",
-                        column: x => x.ParceiroId,
+                        name: "FK_Participacao_AspNetUsers_ParceiroId1",
+                        column: x => x.ParceiroId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Participacao_Veiculo_VeiculoId",
                         column: x => x.VeiculoId,
                         principalTable: "Veiculo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeilaoProduto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Lote = table.Column<int>(nullable: false),
+                    VlAvalicao = table.Column<double>(nullable: false),
+                    VlCondicional = table.Column<double>(nullable: false),
+                    VlPago = table.Column<double>(nullable: false),
+                    VlVenda = table.Column<double>(nullable: false),
+                    ProdutoId = table.Column<int>(nullable: false),
+                    LeilaoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeilaoProduto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LeilaoProduto_Leilao_LeilaoId",
+                        column: x => x.LeilaoId,
+                        principalTable: "Leilao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LeilaoProduto_Produto_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produto",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -294,19 +384,44 @@ namespace InvestCarWeb.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Despesa_ParceiroId1",
+                table: "Despesa",
+                column: "ParceiroId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_VeiculoId1",
+                table: "Despesa",
+                column: "VeiculoId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Leilao_LeiloeiroId",
+                table: "Leilao",
+                column: "LeiloeiroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeilaoProduto_LeilaoId",
+                table: "LeilaoProduto",
+                column: "LeilaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeilaoProduto_ProdutoId",
+                table: "LeilaoProduto",
+                column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participacao_ParceiroId1",
+                table: "Participacao",
+                column: "ParceiroId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Participacao_VeiculoId",
                 table: "Participacao",
                 column: "VeiculoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Responsavel_DespesaId",
-                table: "Responsavel",
-                column: "DespesaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Veiculo_DespesaId",
-                table: "Veiculo",
-                column: "DespesaId");
+                name: "IX_Produto_ParceiroId",
+                table: "Produto",
+                column: "ParceiroId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -327,22 +442,31 @@ namespace InvestCarWeb.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Participacao");
+                name: "Despesa");
 
             migrationBuilder.DropTable(
-                name: "Responsavel");
+                name: "LeilaoProduto");
+
+            migrationBuilder.DropTable(
+                name: "Participacao");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Leilao");
+
+            migrationBuilder.DropTable(
+                name: "Produto");
+
+            migrationBuilder.DropTable(
                 name: "Veiculo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Leiloeiro");
 
             migrationBuilder.DropTable(
-                name: "Despesa");
+                name: "AspNetUsers");
         }
     }
 }
