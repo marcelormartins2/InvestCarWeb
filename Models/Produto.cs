@@ -16,9 +16,9 @@ namespace InvestCarWeb.Models
         [DisplayName(displayName: "Valor Negociado")]
         public double? VlNegociado { get; set; }
         [DisplayName(displayName: "Valor Pago")]
-        public double? VlPago { get; set; }
+        public double? VlCompra { get; set; }
         [DisplayName(displayName: "Valor de Venda")]
-        public double? VlVendido { get; set; }
+        public double? VlVenda { get; set; }
         public string Bairro { get; set; }
         public string Endereco { get; set; }
         public string Localizacao{ get; set; }
@@ -27,5 +27,10 @@ namespace InvestCarWeb.Models
         public string Vendedor { get; set; }
 
         public Parceiro Parceiro { get; set; }
+        [Required()]
+        public string ParceiroId { get; set; }
+
+        public ICollection<Lote> Lote { get; set; } = new List<Lote>();
+
     }
 }

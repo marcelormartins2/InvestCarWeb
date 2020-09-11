@@ -15,5 +15,6 @@ namespace InvestCarWeb.Models
 
         public Leiloeiro Leiloeiro { get; set; }
         public int LeiloeiroId { get; set; }
+        public ICollection<Lote> Lote { get; set; } = new List<Lote>();
     }
 }

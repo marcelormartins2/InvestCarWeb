@@ -1,5 +1,5 @@
 ﻿@using InvestCarWeb.Controllers
-@model IEnumerable<InvestCarWeb.Models.Leilao>
+@model IEnumerable<InvestCarWeb.Models.Lote>
 
 <div class="panel panel-default panel-controls">
     <!-- .page-content-wrapper -->
@@ -12,7 +12,7 @@
                     <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title">Leilão</h4>
+                            <h4 class="panel-title">Produtos/Leilão</h4>
                             <a asp-action="Create">
                                 Adicionar
                             </a>
@@ -21,20 +21,24 @@
                             <table id="basic-datatables" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>Descricao</th>
-                                        <th>Data</th>
-                                        <th>TaxaAvaliacao</th>
-                                        <th>TaxaVenda</th>
-                                        <th>Leiloeiro</th>
+                                        <th>Lote</th>
+                                        <th>Produto</th>
+                                        <th>Leilao</th>
+                                        <th>Aval</th>
+                                        <th>Cond</th>
+                                        <th>Lance</th>
+                                        <th>Pago</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Descricao</th>
-                                        <th>Data</th>
-                                        <th>TaxaAvaliacao</th>
-                                        <th>TaxaVenda</th>
-                                        <th>Leiloeiro</th>
+                                        <th>Lote</th>
+                                        <th>Produto</th>
+                                        <th>Leilao</th>
+                                        <th>Aval</th>
+                                        <th>Cond</th>
+                                        <th>Lance</th>
+                                        <th>Pago</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -43,22 +47,30 @@
                                         <tr>
                                             <td>
                                                 <a asp-action="Details" asp-route-id='@item.Id'>
-                                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                                    @Html.DisplayFor(modelItem => item.Numero)
                                                 </a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Data)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TaxaAvaliacao)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TaxaVenda)
-                                            </td>
-                                            <td>
-                                                <a asp-controller="Leiloeiros" asp-action="Details" asp-route-id="@item.LeiloeiroId">
-                                                    @Html.DisplayFor(modelItem => item.Leiloeiro.Nome)
+                                                <a asp-controller="Produtos" asp-action="Details" asp-route-id="@item.ProdutoId">
+                                                    @Html.DisplayFor(modelItem => item.Produto.Descricao)
                                                 </a>
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Leiloes" asp-action="Details" asp-route-id="@item.LeilaoId">
+                                                    @Html.DisplayFor(modelItem => item.Leilao)
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VlAvalicao)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VlCondicional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VlLance)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VlPago)
                                             </td>
                                         </tr>
                                     }

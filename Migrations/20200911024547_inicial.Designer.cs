@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestCarWeb.Migrations
 {
     [DbContext(typeof(IdentyDbContext))]
-    [Migration("20200910221204_segunda")]
-    partial class segunda
+    [Migration("20200911024547_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,42 +83,6 @@ namespace InvestCarWeb.Migrations
                     b.ToTable("Leilao");
                 });
 
-            modelBuilder.Entity("InvestCarWeb.Models.LeilaoProduto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("LeilaoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Lote")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("VlAvalicao")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("VlCondicional")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("VlLance")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("VlPago")
-                        .HasColumnType("double");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeilaoId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("LeilaoProduto");
-                });
-
             modelBuilder.Entity("InvestCarWeb.Models.Leiloeiro", b =>
                 {
                     b.Property<int>("Id")
@@ -143,6 +107,42 @@ namespace InvestCarWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Leiloeiro");
+                });
+
+            modelBuilder.Entity("InvestCarWeb.Models.Lote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeilaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Numero")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("VlAvalicao")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("VlCondicional")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("VlLance")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("VlPago")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeilaoId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("Lote");
                 });
 
             modelBuilder.Entity("InvestCarWeb.Models.Parceiro", b =>
@@ -284,13 +284,13 @@ namespace InvestCarWeb.Migrations
                     b.Property<double?>("VlAnunciado")
                         .HasColumnType("double");
 
+                    b.Property<double?>("VlCompra")
+                        .HasColumnType("double");
+
                     b.Property<double?>("VlNegociado")
                         .HasColumnType("double");
 
-                    b.Property<double?>("VlPago")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("VlVendido")
+                    b.Property<double?>("VlVenda")
                         .HasColumnType("double");
 
                     b.HasKey("Id");
@@ -511,16 +511,16 @@ namespace InvestCarWeb.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("InvestCarWeb.Models.LeilaoProduto", b =>
+            modelBuilder.Entity("InvestCarWeb.Models.Lote", b =>
                 {
                     b.HasOne("InvestCarWeb.Models.Leilao", "Leilao")
-                        .WithMany()
+                        .WithMany("Lote")
                         .HasForeignKey("LeilaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InvestCarWeb.Models.Produto", "Produto")
-                        .WithMany()
+                        .WithMany("Lote")
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

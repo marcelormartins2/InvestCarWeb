@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace InvestCarWeb.Controllers
 {
-    public class LeilaoProdutosController : Controller
+    public class LotesController : Controller
     {
         private readonly IdentyDbContext _context;
 
-        public LeilaoProdutosController(IdentyDbContext context)
+        public LotesController(IdentyDbContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LeilaoProduto.ToListAsync());
+            return View(await _context.Lote.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? produtoId, int? leilaoId)
@@ -30,14 +30,14 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var leilaoProduto = await _context.LeilaoProduto
+            var Lote = await _context.Lote
                 .FirstOrDefaultAsync(m => m.Produto.Id == produtoId && m.Leilao.Id == leilaoId);
-            if (leilaoProduto == null)
+            if (Lote == null)
             {
                 return NotFound();
             }
 
-            return View(leilaoProduto);
+            return View(Lote);
         }
 
         public IActionResult Create()
@@ -45,21 +45,21 @@ namespace InvestCarWeb.Controllers
             return View();
         }
 
-        // POST: LeilaoProdutos/Create
+        // POST: Lotes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LeilaoProduto leilaoProduto)
+        public async Task<IActionResult> Create(Lote Lote)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leilaoProduto);
+                _context.Add(Lote);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leilaoProduto);
+            return View(Lote);
         }
 
-        // GET: LeilaoProdutos/Edit/5
+        // GET: Lotes/Edit/5
         public async Task<IActionResult> Edit(int? produtoId, int? leilaoId)
         {
             if (produtoId == null || leilaoId == null)
@@ -67,22 +67,22 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var leilaoProduto = await _context.LeilaoProduto.FindAsync(produtoId, leilaoId);
-            if (leilaoProduto == null)
+            var Lote = await _context.Lote.FindAsync(produtoId, leilaoId);
+            if (Lote == null)
             {
                 return NotFound();
             }
-            return View(leilaoProduto);
+            return View(Lote);
         }
 
-        // POST: LeilaoProdutos/Edit/5
+        // POST: Lotes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int leilaoId, int produtoId, LeilaoProduto leilaoProduto)
+        public async Task<IActionResult> Edit(int leilaoId, int produtoId, Lote Lote)
         {
-            if (leilaoId != leilaoProduto.Leilao.Id || produtoId != leilaoProduto.Produto.Id)
+            if (leilaoId != Lote.Leilao.Id || produtoId != Lote.Produto.Id)
             {
                 return NotFound();
             }
@@ -91,12 +91,12 @@ namespace InvestCarWeb.Controllers
             {
                 try
                 {
-                    _context.Update(leilaoProduto);
+                    _context.Update(Lote);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!leilaoProdutoExists(leilaoProduto.Produto.Id, leilaoProduto.Leilao.Id))
+                    if (!LoteExists(Lote.Produto.Id, Lote.Leilao.Id))
                     {
                         return NotFound();
                     }
@@ -107,10 +107,10 @@ namespace InvestCarWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leilaoProduto);
+            return View(Lote);
         }
 
-        // GET: LeilaoProdutos/Delete/5
+        // GET: Lotes/Delete/5
         public async Task<IActionResult> Delete(int? produtoId, int? leilaoId)
         {
             if (produtoId == null || leilaoId == null)
@@ -118,30 +118,30 @@ namespace InvestCarWeb.Controllers
                 return NotFound();
             }
 
-            var leilaoProduto = await _context.LeilaoProduto
+            var Lote = await _context.Lote
                 .FirstOrDefaultAsync(m => m.Produto.Id == produtoId && m.Leilao.Id == leilaoId);
-            if (leilaoProduto == null)
+            if (Lote == null)
             {
                 return NotFound();
             }
 
-            return View(leilaoProduto);
+            return View(Lote);
         }
 
-        // POST: LeilaoProdutos/Delete/5
+        // POST: Lotes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? produtoId, int? leilaoId)
         {
-            var leilaoProduto = await _context.Veiculo.FindAsync(produtoId, leilaoId);
-            _context.Veiculo.Remove(leilaoProduto);
+            var Lote = await _context.Veiculo.FindAsync(produtoId, leilaoId);
+            _context.Veiculo.Remove(Lote);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool leilaoProdutoExists(int? produtoId, int? leilaoId)
+        private bool LoteExists(int? produtoId, int? leilaoId)
         {
-            return _context.LeilaoProduto.Any(e => e.Produto.Id == produtoId && e.Leilao.Id == leilaoId);
+            return _context.Lote.Any(e => e.Produto.Id == produtoId && e.Leilao.Id == leilaoId);
         }
     }
 }

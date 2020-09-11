@@ -30,7 +30,9 @@ namespace InvestCarWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var produto = _context.Produto.Include(a => a.Parceiro).Where(b => b.Parceiro.UserName == User.Identity.Name).ToListAsync();
+            var produto = _context.Produto
+                .Include(a => a.Parceiro).Where(b => b.Parceiro.UserName == User.Identity.Name)
+                .ToListAsync();
             return View(await produto);
         }
 

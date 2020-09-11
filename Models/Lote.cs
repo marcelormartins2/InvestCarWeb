@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace InvestCarWeb.Models
 {
-    public class LeilaoProduto
+
+    public class Lote
     {
         public int Id { get; set; }
-        public string Lote { get; set; }
+        public string Numero { get; set; }
         public double VlAvalicao { get; set; }
         public double? VlCondicional { get; set; }
         public double? VlPago { get; set; }
